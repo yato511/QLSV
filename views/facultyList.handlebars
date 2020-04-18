@@ -1,0 +1,48 @@
+<div class="col-md-8 mx-auto my-2 p-3 border rounded">
+    <table class="table border">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tên khoa</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each this.list}}
+            <tr>
+                <th scope="row">{{this.index}}</th>
+                <td class="faculty-name">{{this.name}}</td>
+                <td class="text-right p-1"><button class="btn-delete btn btn-danger" id="{{this.index}}"><i
+                            class="fa fa-trash" aria-hidden="true"></i></button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <div class="alert alert-danger" role="alert" id="alert-format" hidden>
+        Tên khoa không được để trống
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="alert alert-danger" role="alert" id="alert-dup" hidden>
+        Tên khoa bị trùng
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="alert alert-danger my-3" role="alert" id="alert-submit" hidden>
+        Có lỗi xảy ra. Vui lòng kiểm tra lại thông tin
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div id="div-add" class="text-center">
+        <button type="button" class="btn btn-primary w-25" id="btn-add">Thêm khoa mới</button>
+    </div>
+    <div id="div-save" class="text-center" hidden>
+        <button type="button" class="btn btn-success w-25" id="btn-save">Save</button>
+        <button type="button" class="btn btn-danger" id="btn-cancel">Cancel</button>
+    </div>
+</div>

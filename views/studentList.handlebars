@@ -1,0 +1,60 @@
+<div class="col-md-12 mx-auto my-2">
+    <p class="float-left d-inline">Giới hạn hiển thị: <strong>{{this.limit}}</strong></p>
+    <p class="float-right d-inline">Hiển thị từ <strong>{{this.pagingCounter}}</strong> đến
+        <strong>{{this.pagingCounterLast}}</strong> trong tổng số
+        <strong>{{this.totalDocs}}</strong></p>
+    <table class="table border">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">MSSV</th>
+                <th scope="col">Họ và tên</th>
+                <th scope="col">Giới tính</th>
+                <th scope="col">Ngày sinh</th>
+                <th scope="col">Địa chỉ</th>
+                <th scope="col">Khoa</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each this.docs}}
+            <tr>
+                <th class="student-id p-1 align-middle" scope="row">{{this.studentId}}</th>
+                <td class="p-1 align-middle">{{this.name}}</td>
+                <td class="p-1 align-middle">{{this.gender}}</td>
+                <td class="p-1 align-middle">{{this.birthday}}</td>
+                <td class="p-1 align-middle">{{this.address}}</td>
+                <td class="p-1 align-middle">{{this.faculty}}</td>
+                <td class="p-1 text-right align-middle"><button class="btn-delete-sv btn btn-danger btn-sm"
+                        id="{{@index}}"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item {{#unless this.hasPrevPage}}disabled{{/unless}}">
+                <a class="page-link" href="/student/{{prevPage}}" tabindex="-1" aria-disabled="true">Trước</a>
+            </li>
+            {{#each this.pageList}}
+            <li class="page-item {{#if this.active}}active{{/if}}">
+                <a class="page-link" href="/student/{{this.number}}">
+                    {{this.number}}</a>
+            </li>
+            {{/each}}
+            <li class="page-item {{#unless this.hasNextPage}}disabled{{/unless}}">
+                <a class="page-link" href="/student/{{nextPage}}">Sau</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="alert alert-danger my-3" role="alert" id="alert-delete" hidden>
+        Có lỗi xảy ra. Vui lòng kiểm tra lại
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="py-3 text-center">
+        <a type="button" class="btn btn-success w-25" href="/student/create">Thêm sinh viên mới</a>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="col-md-10 mx-auto my-3 p-3 border rounded-lg ">
+    <h1 class="text-center">Thêm sinh viên mới</h1>
+
+    <form>
+        <div class="form-group">
+            <label for="id">MSSV <i class="fa fa-check-circle" style="color: green;" id="valid-id" hidden></i></label>
+            <div class="alert alert-danger" role="alert" id="alert-id-format" hidden>
+                MSSV phải là dãy số có 7 hoặc 8 chữ số
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger" role="alert" id="alert-id-dup" hidden>
+                MSSV bị trùng
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="text" class="form-control" placeholder="1710001" name="id" id="id">
+        </div>
+        <div class="form-group">
+            <label>Họ và tên <i class="fa fa-check-circle" style="color: green;" id="valid-name" hidden></i></label>
+            <div class="alert alert-danger" role="alert" id="alert-name-first" hidden>
+                Tên không được để trống
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger" role="alert" id="alert-name-last" hidden>
+                Họ không được để trống
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Họ" name="lastName" id="lastName">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Tên" name="firstName" id="firstName">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="faculty">Khoa </label>
+            <select class="form-control" id="faculty">
+                {{#each this.fList}}
+                <option value="{{this.name}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="birthday">Ngày sinh <i class="fa fa-check-circle" style="color: green;" id="valid-birthday"
+                    hidden></i></label>
+            <div class="alert alert-danger" role="alert" id="alert-birthday" hidden>
+                Ngày sinh không được để trống
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input data-toggle="datepicker" name="birthday" id="birthday" class="form-control datepicker"
+                onkeydown="return false;" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Giới tính </label>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="male" name="gender" class="custom-control-input" value="Nam" checked>
+                <label class="custom-control-label" for="male">Nam</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="female" name="gender" class="custom-control-input" value="Nữ">
+                <label class="custom-control-label" for="female">Nữ</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address">Địa chỉ <i class="fa fa-check-circle" style="color: green;" id="valid-address"
+                    hidden></i></label>
+            <div class="alert alert-danger" role="alert" id="alert-address" hidden>
+                Địa chỉ không được để trống
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="text" class="form-control" name="address" id="address">
+        </div>
+
+        <div class="alert alert-danger my-3" role="alert" id="alert-submit" hidden>
+            Có lỗi xảy ra. Vui lòng kiểm tra lại thông tin
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <button class="btn btn-primary d-block mx-auto w-25" type="button" onclick="validate(event)">Thêm</button>
+    </form>
+
+</div>
