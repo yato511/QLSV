@@ -4,12 +4,12 @@ $('[data-toggle="datepicker"]').datepicker({
 	autoPick: true,
 });
 
-$("tr:even").css("background-color", "rgb(237, 238, 243)");
+// $("tr:even").css("background-color", "rgb(237, 238, 243)");
 
 async function validate(event) {
 	event.preventDefault();
 	const student = {
-		studentId: $("#id").val().trim(),
+		studentId: $("#id").val(),
 		name: {
 			firstName: $("#firstName").val().trim(),
 			lastName: $("#lastName").val().trim(),
@@ -18,17 +18,18 @@ async function validate(event) {
 		address: $("#address").val().trim(),
 		birthday: $("#birthday").val(),
 		faculty: $("#faculty").val(),
+		year: $("#year").val(),
 	};
 
 	let isValid = true;
 	//Id
-	if (new RegExp(/^\d{7,8}$/).test(student.studentId)) {
-		$("#alert-id-format").attr("hidden", true);
-	} else {
-		$("#alert-id-format").removeAttr("hidden");
-		$("#valid-id").attr("hidden", true);
-		isValid = false;
-	}
+	// if (new RegExp(/^\d{7,8}$/).test(student.studentId)) {
+	// 	$("#alert-id-format").attr("hidden", true);
+	// } else {
+	// 	$("#alert-id-format").removeAttr("hidden");
+	// 	$("#valid-id").attr("hidden", true);
+	// 	isValid = false;
+	// }
 	//Name
 	if (student.name.firstName == 0) {
 		$("#alert-name-first").removeAttr("hidden");
@@ -64,25 +65,25 @@ async function validate(event) {
 		$("#valid-address").removeAttr("hidden");
 	}
 
-	if (isValid) {
-		await $.ajax({
-			url: `/student/check`,
-			type: "post",
-			dataType: "json",
-			contentType: "application/json",
-			data: JSON.stringify({ studentId: student.studentId }),
-			success: function (response) {
-				if (response === 1) {
-					$("#alert-id-dup").attr("hidden", true);
-					$("#valid-id").removeAttr("hidden");
-				} else {
-					$("#alert-id-dup").removeAttr("hidden");
-					$("#valid-id").attr("hidden", true);
-					isValid = false;
-				}
-			},
-		});
-	}
+	// if (isValid) {
+	// 	await $.ajax({
+	// 		url: `/student/check`,
+	// 		type: "post",
+	// 		dataType: "json",
+	// 		contentType: "application/json",
+	// 		data: JSON.stringify({ studentId: student.studentId }),
+	// 		success: function (response) {
+	// 			if (response === 1) {
+	// 				$("#alert-id-dup").attr("hidden", true);
+	// 				$("#valid-id").removeAttr("hidden");
+	// 			} else {
+	// 				$("#alert-id-dup").removeAttr("hidden");
+	// 				$("#valid-id").attr("hidden", true);
+	// 				isValid = false;
+	// 			}
+	// 		},
+	// 	});
+	// }
 
 	if (isValid) {
 		$.ajax({
@@ -104,11 +105,13 @@ async function validate(event) {
 }
 
 $("#btn-add").click(() => {
-	const index = parseInt($("tbody tr th").last().text()) + 1;
+	let index = parseInt($("tbody tr th").last().text()) + 1;
+	if (index < 10) index = "0" + index;
+	else index = "" + index;
 	const row = `<tr>
 	<th scope="row">${index}</th>
 	<td><input type="text" class="form-control" name="faculty" id="input-faculty" placeholder="Tên khoa"></td>
-	<td></td>
+	<td colspan="5"></td>
 </tr>`;
 	$("tbody").append(row);
 	$("#div-add").hide();
@@ -184,7 +187,7 @@ $(".btn-delete").click(() => {
 $(".btn-delete-sv").click(() => {
 	const index = parseInt($(event.currentTarget).attr("id"));
 	const id = $(`.student-id:eq(${index})`).text();
-	console.log(id);
+	// console.log(id);
 	$.ajax({
 		url: `/student/delete`,
 		type: "delete",
@@ -200,4 +203,23 @@ $(".btn-delete-sv").click(() => {
 			}
 		},
 	});
+});
+
+function generateId() {
+	const year = $("#year").val();
+	const faculty = $("#faculty").val();
+	$.ajax({
+		type: "post",
+		url: "/student/generate",
+		dataType: "json",
+		contentType: "application/json",
+		data: JSON.stringify({ year, faculty }),
+		success: function (response) {
+			$("#id").val(response);
+		},
+	});
+}
+
+$("#id").ready(() => {
+	if ($("#id").length) generateId();
 });

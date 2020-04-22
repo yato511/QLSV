@@ -1,10 +1,18 @@
-<div class="col-md-8 mx-auto my-2 p-3 border rounded">
-    <table class="table border">
+<div class="col-md-8 mx-auto my-2 p-3">
+    <table class="table border table-striped table-bordered ">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">STT</th>
-                <th scope="col">Tên khoa</th>
-                <th scope="col"></th>
+                <th scope="col" rowspan="2" class="align-middle">Mã khoa</th>
+                <th scope="col" rowspan="2" class="align-middle">Tên khoa</th>
+                <th scope="col" colspan="5" class="align-middle text-center">Tổng sinh viên</th>
+                {{!-- <th scope="col" rowspan="2"></th> --}}
+            </tr>
+            <tr>
+                <th>2016</th>
+                <th>2017</th>
+                <th>2018</th>
+                <th>2019</th>
+                <th>Tất cả</th>
             </tr>
         </thead>
         <tbody>
@@ -12,11 +20,31 @@
             <tr>
                 <th scope="row">{{this.index}}</th>
                 <td class="faculty-name">{{this.name}}</td>
-                <td class="text-right p-1"><button class="btn-delete btn btn-danger" id="{{this.index}}"><i
-                            class="fa fa-trash" aria-hidden="true"></i></button></td>
+                <td class="faculty-total">{{this.total.t2016}}</td>
+                <td class="faculty-total">{{this.total.t2017}}</td>
+                <td class="faculty-total">{{this.total.t2018}}</td>
+                <td class="faculty-total">{{this.total.t2019}}</td>
+                <td class="faculty-total" scope="row">{{this.total.t}}</td>
+
+                <td class="text-right p-1" hidden>
+                    <button class="btn-delete btn btn-danger" id="{{this.index}}">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </td>
             </tr>
             {{/each}}
         </tbody>
+        <tfoot>
+            <tr class="table-success">
+                <th colspan="2" class="text-right">Tổng: </th>
+                <th>{{this.totals.t2016}}</th>
+                <th>{{this.totals.t2017}}</th>
+                <th>{{this.totals.t2018}}</th>
+                <th>{{this.totals.t2019}}</th>
+                <th>{{this.totalStudent}}</th>
+                {{!-- <td></td> --}}
+            </tr>
+        </tfoot>
     </table>
 
     <div class="alert alert-danger" role="alert" id="alert-format" hidden>

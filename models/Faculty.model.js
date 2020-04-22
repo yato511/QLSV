@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 const facultySchema = new Schema(
 	{
+		index: {
+			type: String,
+			required: true,
+			unique: true,
+		},
 		name: {
 			type: String,
 			required: true,

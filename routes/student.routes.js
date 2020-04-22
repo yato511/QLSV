@@ -48,14 +48,36 @@ router.get("/:page", async (req, res) => {
 	});
 });
 
-router.post("/check", async (req, res) => {
-	const { studentId } = req.body;
-	const matched = await Student.findOne({ studentId }).lean();
-	if (matched) {
-		res.json(0);
+// router.post("/check", async (req, res) => {
+// 	const { studentId } = req.body;
+// 	const matched = await Student.findOne({ studentId }).lean();
+// 	if (matched) {
+// 		res.json(0);
+// 	} else {
+// 		res.json(1);
+// 	}
+// });
+
+router.post("/generate", async (req, res) => {
+	const { year, faculty } = req.body;
+	const f = await Faculty.findOne({ name: faculty }).lean();
+	const sList = await Student.find({ faculty, year }).sort("studentId").lean();
+	let sIndex;
+	if (sList.length == 0) {
+		sIndex = "001";
 	} else {
-		res.json(1);
+		let temp = parseInt(sList[sList.length - 1].studentId.slice(-3)) + 1;
+		if (temp < 10) {
+			sIndex = "00" + temp;
+		} else if (temp < 100) {
+			sIndex = "0" + temp;
+		} else {
+			sIndex = "" + temp;
+		}
 	}
+	const studentId = (year - 2000).toString() + f.index + sIndex;
+
+	res.json(studentId);
 });
 
 router.post("/create", (req, res) => {
@@ -67,8 +89,8 @@ router.post("/create", (req, res) => {
 		gender: req.body.gender,
 		address: req.body.address,
 		faculty: req.body.faculty,
+		year: parseInt(req.body.year),
 	});
-	console.log(newStudent);
 	newStudent
 		.save()
 		.then(() => res.json(1))

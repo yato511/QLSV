@@ -3,15 +3,16 @@
     <p class="float-right d-inline">Hiển thị từ <strong>{{this.pagingCounter}}</strong> đến
         <strong>{{this.pagingCounterLast}}</strong> trong tổng số
         <strong>{{this.totalDocs}}</strong></p>
-    <table class="table border">
+    <table class="table border table-striped">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">MSSV</th>
+                <th scope="col">Khóa</th>
+                <th scope="col">Khoa</th>
                 <th scope="col">Họ và tên</th>
                 <th scope="col">Giới tính</th>
                 <th scope="col">Ngày sinh</th>
                 <th scope="col">Địa chỉ</th>
-                <th scope="col">Khoa</th>
                 <th></th>
             </tr>
         </thead>
@@ -19,11 +20,12 @@
             {{#each this.docs}}
             <tr>
                 <th class="student-id p-1 align-middle" scope="row">{{this.studentId}}</th>
+                <td class="p-1 align-middle">{{this.year}}</td>
+                <td class="p-1 align-middle">{{this.faculty}}</td>
                 <td class="p-1 align-middle">{{this.name}}</td>
                 <td class="p-1 align-middle">{{this.gender}}</td>
                 <td class="p-1 align-middle">{{this.birthday}}</td>
                 <td class="p-1 align-middle">{{this.address}}</td>
-                <td class="p-1 align-middle">{{this.faculty}}</td>
                 <td class="p-1 text-right align-middle"><button class="btn-delete-sv btn btn-danger btn-sm"
                         id="{{@index}}"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
             </tr>
